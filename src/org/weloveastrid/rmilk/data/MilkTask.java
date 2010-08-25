@@ -1,6 +1,6 @@
 package org.weloveastrid.rmilk.data;
 
-import org.weloveastrid.rmilk.sync.RTMTaskContainer;
+import org.weloveastrid.rmilk.sync.MilkTaskContainer;
 
 import com.todoroo.andlib.Property.IntegerProperty;
 import com.todoroo.andlib.Property.LongProperty;
@@ -37,7 +37,7 @@ public class MilkTask {
      * @param rtmTaskSeries
      * @return
      */
-    public static Metadata create(RTMTaskContainer container) {
+    public static Metadata create(MilkTaskContainer container) {
         Metadata metadata = new Metadata();
         metadata.setValue(Metadata.KEY, METADATA_KEY);
         metadata.setValue(MilkTask.LIST_ID, container.listId);

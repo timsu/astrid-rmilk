@@ -31,7 +31,7 @@ public class MilkDetailExposer extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // if we aren't logged in, don't expose features
-        if(!MilkUtilities.isLoggedIn())
+        if(!MilkUtilities.INSTANCE.isLoggedIn())
             return;
 
         long taskId = intent.getLongExtra(AstridApiConstants.EXTRAS_TASK_ID, -1);

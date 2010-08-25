@@ -17,6 +17,7 @@ import android.view.ViewGroup.OnHierarchyChangeListener;
 import com.todoroo.andlib.AndroidUtilities;
 import com.todoroo.andlib.DateUtilities;
 import com.todoroo.andlib.DialogUtilities;
+import com.todoroo.andlib.TodorooPreferences;
 
 /**
  * Utility class for common synchronization action: displaying synchronization

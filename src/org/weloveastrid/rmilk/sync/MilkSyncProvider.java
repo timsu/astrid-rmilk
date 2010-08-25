@@ -54,7 +54,7 @@ import com.todoroo.astrid.api.AstridApiConstants;
 import com.todoroo.astrid.data.Metadata;
 import com.todoroo.astrid.data.Task;
 
-public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
+public class MilkSyncProvider extends SyncProvider<MilkTaskContainer> {
 
     private ServiceImpl rtmService = null;
     private String timeline = null;
@@ -68,8 +68,8 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
      * Sign out of RTM, deleting all synchronization metadata
      */
     public void signOut(Context context) {
-        MilkUtilities.setToken(null);
-        MilkUtilities.clearLastSyncDate();
+        MilkUtilities.INSTANCE.setToken(null);
+        MilkUtilities.INSTANCE.clearLastSyncDate();
 
         dataService = MilkDataService.getInstance(context);
         dataService.clearMetadata();
@@ -89,7 +89,7 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
      */
     @Override
     protected void handleException(String tag, Exception e, boolean showError) {
-        MilkUtilities.setLastError(e.toString());
+        MilkUtilities.INSTANCE.setLastError(e.toString());
 
         // occurs when application was closed
         if(e instanceof IllegalStateException) {
@@ -138,7 +138,7 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
         dataService = MilkDataService.getInstance(service);
 
         try {
-            String authToken = MilkUtilities.getToken();
+            String authToken = MilkUtilities.INSTANCE.getToken();
 
             // check if we have a token & it works
             if(authToken != null) {
@@ -152,7 +152,7 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
                 if(rtmService != null) {
                     try {
                         String token = rtmService.completeAuthorization();
-                        MilkUtilities.setToken(token);
+                        MilkUtilities.INSTANCE.setToken(token);
                         performSync();
 
                         return;
@@ -171,7 +171,7 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
         } catch (Exception e) {
             handleException("rtm-authenticate", e, true);
         } finally {
-            MilkUtilities.stopOngoing();
+            MilkUtilities.INSTANCE.stopOngoing();
         }
     }
 
@@ -182,8 +182,8 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
     @Override
     protected void initiateManual(final Activity activity) {
         final Resources r = activity.getResources();
-        String authToken = MilkUtilities.getToken();
-        MilkUtilities.stopOngoing();
+        String authToken = MilkUtilities.INSTANCE.getToken();
+        MilkUtilities.INSTANCE.stopOngoing();
 
         // check if we have a token & it works
         if(authToken == null) {
@@ -205,7 +205,7 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
                     }
                     try {
                         String token = rtmService.completeAuthorization();
-                        MilkUtilities.setToken(token);
+                        MilkUtilities.INSTANCE.setToken(token);
                         synchronize(activity);
                         return null;
                     } catch (Exception e) {
@@ -240,8 +240,8 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
             dataService.setLists(lists);
 
             // read all tasks
-            ArrayList<RTMTaskContainer> remoteChanges = new ArrayList<RTMTaskContainer>();
-            Date lastSyncDate = new Date(MilkUtilities.getLastSyncDate());
+            ArrayList<MilkTaskContainer> remoteChanges = new ArrayList<MilkTaskContainer>();
+            Date lastSyncDate = new Date(MilkUtilities.INSTANCE.getLastSyncDate());
             boolean shouldSyncIndividualLists = false;
             String filter = null;
             if(lastSyncDate.getTime() == 0)
@@ -274,7 +274,7 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
                 }
             }
 
-            SyncData<RTMTaskContainer> syncData = populateSyncData(remoteChanges);
+            SyncData<MilkTaskContainer> syncData = populateSyncData(remoteChanges);
             try {
                 synchronizeTasks(syncData);
             } finally {
@@ -282,7 +282,7 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
                 syncData.localUpdated.close();
             }
 
-            MilkUtilities.recordSuccessfulSync();
+            MilkUtilities.INSTANCE.recordSuccessfulSync();
             Intent broadcastIntent = new Intent(AstridApiConstants.BROADCAST_EVENT_REFRESH);
             ContextManager.getContext().sendBroadcast(broadcastIntent, AstridApiConstants.PERMISSION_READ);
 
@@ -312,23 +312,23 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
     /**
      * Populate SyncData data structure
      */
-    private SyncData<RTMTaskContainer> populateSyncData(ArrayList<RTMTaskContainer> remoteTasks) {
+    private SyncData<MilkTaskContainer> populateSyncData(ArrayList<MilkTaskContainer> remoteTasks) {
         // fetch locally created tasks
         TodorooCursor<Task> localCreated = dataService.getLocallyCreated(PROPERTIES);
 
         // fetch locally updated tasks
         TodorooCursor<Task> localUpdated = dataService.getLocallyUpdated(PROPERTIES);
 
-        return new SyncData<RTMTaskContainer>(remoteTasks, localCreated, localUpdated);
+        return new SyncData<MilkTaskContainer>(remoteTasks, localCreated, localUpdated);
     }
 
     /**
      * Add the tasks read from RTM to the given list
      */
-    private void addTasksToList(RtmTasks tasks, ArrayList<RTMTaskContainer> list) {
+    private void addTasksToList(RtmTasks tasks, ArrayList<MilkTaskContainer> list) {
         for (RtmTaskList taskList : tasks.getLists()) {
             for (RtmTaskSeries taskSeries : taskList.getSeries()) {
-                RTMTaskContainer remote = parseRemoteTask(taskSeries);
+                MilkTaskContainer remote = parseRemoteTask(taskSeries);
 
                 // update reminder flags for incoming remote tasks to prevent annoying
                 if(remote.task.hasDueDate() && remote.task.getValue(Task.DUE_DATE) < DateUtilities.now())
@@ -345,13 +345,13 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
     // ----------------------------------------------------------------------
 
     @Override
-    protected RTMTaskContainer create(RTMTaskContainer task) throws IOException {
+    protected MilkTaskContainer create(MilkTaskContainer task) throws IOException {
         String listId = null;
         if(task.listId > 0)
             listId = Long.toString(task.listId);
         RtmTaskSeries rtmTask = rtmService.tasks_add(timeline, listId,
                 task.task.getValue(Task.TITLE));
-        RTMTaskContainer newRemoteTask = parseRemoteTask(rtmTask);
+        MilkTaskContainer newRemoteTask = parseRemoteTask(rtmTask);
         transferIdentifiers(newRemoteTask, task);
         push(task, newRemoteTask);
         return newRemoteTask;
@@ -389,7 +389,7 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
      * have changed.
      */
     @Override
-    protected void push(RTMTaskContainer local, RTMTaskContainer remote) throws IOException {
+    protected void push(MilkTaskContainer local, MilkTaskContainer remote) throws IOException {
         boolean remerge = false;
 
         // fetch remote task for comparison
@@ -480,7 +480,7 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
     }
 
     /** Create a task container for the given RtmTaskSeries */
-    private RTMTaskContainer parseRemoteTask(RtmTaskSeries rtmTaskSeries) {
+    private MilkTaskContainer parseRemoteTask(RtmTaskSeries rtmTaskSeries) {
         Task task = new Task();
         RtmTask rtmTask = rtmTaskSeries.getTask();
         ArrayList<Metadata> metadata = new ArrayList<Metadata>();
@@ -520,13 +520,13 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
             }
         }
 
-        RTMTaskContainer container = new RTMTaskContainer(task, metadata, rtmTaskSeries);
+        MilkTaskContainer container = new MilkTaskContainer(task, metadata, rtmTaskSeries);
 
         return container;
     }
 
     @Override
-    protected RTMTaskContainer pull(RTMTaskContainer task) throws IOException {
+    protected MilkTaskContainer pull(MilkTaskContainer task) throws IOException {
         if(task.taskSeriesId == 0)
             throw new ServiceInternalException("Tried to read an invalid task"); //$NON-NLS-1$
         RtmTaskSeries rtmTask = rtmService.tasks_getTask(Long.toString(task.taskSeriesId),
@@ -541,12 +541,12 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
     // ----------------------------------------------------------------------
 
     @Override
-    protected RTMTaskContainer read(TodorooCursor<Task> cursor) throws IOException {
+    protected MilkTaskContainer read(TodorooCursor<Task> cursor) throws IOException {
         return dataService.readTaskAndMetadata(cursor);
     }
 
     @Override
-    protected void write(RTMTaskContainer task) throws IOException {
+    protected void write(MilkTaskContainer task) throws IOException {
         dataService.saveTaskAndMetadata(task);
     }
 
@@ -555,10 +555,10 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
     // ----------------------------------------------------------------------
 
     @Override
-    protected int matchTask(ArrayList<RTMTaskContainer> tasks, RTMTaskContainer target) {
+    protected int matchTask(ArrayList<MilkTaskContainer> tasks, MilkTaskContainer target) {
         int length = tasks.size();
         for(int i = 0; i < length; i++) {
-            RTMTaskContainer task = tasks.get(i);
+            MilkTaskContainer task = tasks.get(i);
             if(AndroidUtilities.equals(task.listId, target.listId) &&
                     AndroidUtilities.equals(task.taskSeriesId, target.taskSeriesId) &&
                     AndroidUtilities.equals(task.taskId, target.taskId))
@@ -580,8 +580,8 @@ public class RTMSyncProvider extends SyncProvider<RTMTaskContainer> {
     }
 
     @Override
-    protected void transferIdentifiers(RTMTaskContainer source,
-            RTMTaskContainer destination) {
+    protected void transferIdentifiers(MilkTaskContainer source,
+            MilkTaskContainer destination) {
         destination.listId = source.listId;
         destination.taskSeriesId = source.taskSeriesId;
         destination.taskId = source.taskId;

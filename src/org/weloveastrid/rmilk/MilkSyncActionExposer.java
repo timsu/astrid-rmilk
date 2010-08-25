@@ -20,7 +20,7 @@ public class MilkSyncActionExposer extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // if we aren't logged in, don't expose sync action
-        if(!MilkUtilities.isLoggedIn())
+        if(!MilkUtilities.INSTANCE.isLoggedIn())
             return;
 
         Intent syncIntent = new Intent(MilkBackgroundService.SYNC_ACTION, null,

@@ -1,6 +1,6 @@
 package org.weloveastrid.rmilk;
 
-import org.weloveastrid.rmilk.sync.RTMSyncProvider;
+import org.weloveastrid.rmilk.sync.MilkSyncProvider;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -38,7 +38,7 @@ public class MilkBackgroundService extends Service {
             if(intent != null && SYNC_ACTION.equals(intent.getAction()))
                 startSynchronization(this);
         } catch (Exception e) {
-            MilkUtilities.setLastError(e.toString());
+            MilkUtilities.INSTANCE.setLastError(e.toString());
         }
     }
 
@@ -49,10 +49,10 @@ public class MilkBackgroundService extends Service {
 
         ContextManager.setContext(context);
 
-        if(MilkUtilities.isOngoing())
+        if(MilkUtilities.INSTANCE.isOngoing())
             return;
 
-        new RTMSyncProvider().synchronize(context);
+        new MilkSyncProvider().synchronize(context);
     }
 
     // --- alarm management
@@ -62,7 +62,7 @@ public class MilkBackgroundService extends Service {
      */
     public static void scheduleService() {
         Context context = ContextManager.getContext();
-        int syncFrequencySeconds = MilkUtilities.getSyncAutoSyncFrequency();
+        int syncFrequencySeconds = MilkUtilities.INSTANCE.getSyncAutoSyncFrequency();
         if(syncFrequencySeconds <= 0) {
     	    unscheduleService(context);
     	    return;
@@ -113,7 +113,7 @@ public class MilkBackgroundService extends Service {
 
     private static long computeNextSyncOffset(long interval) {
         // figure out last synchronize time
-        long lastSyncDate = MilkUtilities.getLastSyncDate();
+        long lastSyncDate = MilkUtilities.INSTANCE.getLastSyncDate();
 
         // if user never synchronized, give them a full offset period before bg sync
         if(lastSyncDate != 0)

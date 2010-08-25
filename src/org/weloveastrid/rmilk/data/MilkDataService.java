@@ -10,7 +10,7 @@ import java.util.Random;
 import org.weloveastrid.rmilk.MilkUtilities;
 import org.weloveastrid.rmilk.api.data.RtmList;
 import org.weloveastrid.rmilk.api.data.RtmLists;
-import org.weloveastrid.rmilk.sync.RTMTaskContainer;
+import org.weloveastrid.rmilk.sync.MilkTaskContainer;
 
 import android.content.Context;
 import android.database.CursorJoiner;
@@ -22,12 +22,12 @@ import com.todoroo.andlib.Query;
 import com.todoroo.andlib.TodorooCursor;
 import com.todoroo.astrid.data.Metadata;
 import com.todoroo.astrid.data.MetadataDao;
+import com.todoroo.astrid.data.MetadataDao.MetadataCriteria;
 import com.todoroo.astrid.data.StoreObject;
 import com.todoroo.astrid.data.StoreObjectDao;
+import com.todoroo.astrid.data.StoreObjectDao.StoreObjectCriteria;
 import com.todoroo.astrid.data.Task;
 import com.todoroo.astrid.data.TaskDao;
-import com.todoroo.astrid.data.MetadataDao.MetadataCriteria;
-import com.todoroo.astrid.data.StoreObjectDao.StoreObjectCriteria;
 import com.todoroo.astrid.data.TaskDao.TaskCriteria;
 
 public final class MilkDataService {
@@ -77,7 +77,7 @@ public final class MilkDataService {
      * @return cursor
      */
     private TodorooCursor<Task> getLocallyModified(Criterion criterion, Property<?>... properties) {
-        long lastSyncDate = MilkUtilities.getLastSyncDate();
+        long lastSyncDate = MilkUtilities.INSTANCE.getLastSyncDate();
         if(lastSyncDate == 0)
             return taskDao.query(Query.select(Task.ID).where(criterion).orderBy(Order.asc(Task.ID)));
         return
@@ -147,7 +147,7 @@ public final class MilkDataService {
      * Searches for a local task with same remote id, updates this task's id
      * @param remoteTask
      */
-    public void findLocalMatch(RTMTaskContainer remoteTask) {
+    public void findLocalMatch(MilkTaskContainer remoteTask) {
         if(remoteTask.task.getId() != Task.NO_ID)
             return;
         TodorooCursor<Metadata> cursor = metadataDao.query(Query.select(Metadata.TASK).
@@ -168,7 +168,7 @@ public final class MilkDataService {
      * Saves a task and its metadata
      * @param task
      */
-    public void saveTaskAndMetadata(RTMTaskContainer task) {
+    public void saveTaskAndMetadata(MilkTaskContainer task) {
         taskDao.save(task.task);
 
         task.metadata.add(MilkTask.create(task));
@@ -183,7 +183,7 @@ public final class MilkDataService {
      * @param task
      * @return
      */
-    public RTMTaskContainer readTaskAndMetadata(TodorooCursor<Task> taskCursor) {
+    public MilkTaskContainer readTaskAndMetadata(TodorooCursor<Task> taskCursor) {
         Task task = new Task(taskCursor);
 
         // read tags, notes, etc
@@ -201,7 +201,7 @@ public final class MilkDataService {
             metadataCursor.close();
         }
 
-        return new RTMTaskContainer(task, metadata);
+        return new MilkTaskContainer(task, metadata);
     }
 
     /**

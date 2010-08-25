@@ -21,9 +21,9 @@ import com.todoroo.astrid.api.FilterCategory;
 import com.todoroo.astrid.api.FilterListHeader;
 import com.todoroo.astrid.api.FilterListItem;
 import com.todoroo.astrid.data.Metadata;
+import com.todoroo.astrid.data.MetadataDao.MetadataCriteria;
 import com.todoroo.astrid.data.StoreObject;
 import com.todoroo.astrid.data.Task;
-import com.todoroo.astrid.data.MetadataDao.MetadataCriteria;
 import com.todoroo.astrid.data.TaskDao.TaskCriteria;
 
 /**
@@ -57,7 +57,7 @@ public class MilkFilterExposer extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // if we aren't logged in, don't expose features
-        if(!MilkUtilities.isLoggedIn())
+        if(!MilkUtilities.INSTANCE.isLoggedIn())
             return;
 
         StoreObject[] lists = MilkDataService.getInstance(context).getLists();
