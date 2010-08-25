@@ -27,15 +27,16 @@ public class MilkBackgroundService extends Service {
 	private static final long AUTO_SYNC_MIN_OFFSET = 5*60*1000L;
 
     /** alarm identifier */
-    private static final String SYNC_ACTION = "sync"; //$NON-NLS-1$
+    public static final String SYNC_ACTION = "sync"; //$NON-NLS-1$
 
     // --- BroadcastReceiver abstract methods
 
-    /** Receive the alarm - start the synchronize service! */
+    /** start the synchronization service. sits in the background */
     @Override
     public void onStart(Intent intent, int startId) {
         try {
-            startSynchronization(this);
+            if(intent != null && SYNC_ACTION.equals(intent.getAction()))
+                startSynchronization(this);
         } catch (Exception e) {
             MilkUtilities.setLastError(e.toString());
         }

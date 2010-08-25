@@ -14,11 +14,12 @@ import org.weloveastrid.rmilk.R;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.Service;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.todoroo.andlib.TodorooCursor;
 import com.todoroo.andlib.Property.LongProperty;
+import com.todoroo.andlib.TodorooCursor;
 import com.todoroo.astrid.data.Task;
 
 /**
@@ -34,18 +35,29 @@ import com.todoroo.astrid.data.Task;
  */
 public abstract class SyncProvider<TYPE extends TaskContainer> {
 
-    private static final int NOTIFICATION_SYNC = 2;
+    /** notification id for sync */
+    private static final int NOTIFICATION_SYNC = 0;
 
     // --- abstract methods - your services should implement these
 
     /**
-     * Perform authenticate and other pre-synchronization steps, then
-     * synchronize.
+     * Perform log in (launching activity if necessary) and sync. This is
+     * invoked when users manually request synchronization
      *
-     * @param context
-     *            either the parent activity, or a background service
+     * @param activity
+     *            context
      */
-    abstract protected void initiate(Context context);
+    abstract protected void initiateManual(Activity activity);
+
+    /**
+     * Perform synchronize. Since this can be called from background services,
+     * you should not open up new activities. Instead, if the user is not signed
+     * in, your service should do nothing.
+     *
+     * @param service
+     *            context
+     */
+    abstract protected void initiateBackground(Service service);
 
     /**
      * Updates the text of a notification and the intent to open when tapped
@@ -69,9 +81,11 @@ public abstract class SyncProvider<TYPE extends TaskContainer> {
     /**
      * Create a task on the remote server.
      *
-     * @return task to create
+     * @param task
+     *            task to create
+     * @return task created on remote server
      */
-    abstract protected void create(TYPE task) throws IOException;
+    abstract protected TYPE create(TYPE task) throws IOException;
 
     /**
      * Push variables from given task to the remote server.
@@ -143,24 +157,25 @@ public abstract class SyncProvider<TYPE extends TaskContainer> {
                             Toast.LENGTH_LONG).show();
                 }
             });
-        }
+            initiateManual((Activity)context);
+        } else if(context instanceof Service) {
+            // display notification
+            updateNotification(context, notification);
+            final NotificationManager nm = (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
+            nm.notify(NOTIFICATION_SYNC, notification);
 
-        // display notification
-        updateNotification(context, notification);
-        final NotificationManager nm = (android.app.NotificationManager)
-            context.getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(NOTIFICATION_SYNC, notification);
-
-        // start next step in background thread
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    initiate(context);
-                } finally {
-                    nm.cancel(NOTIFICATION_SYNC);
+            // start next step in background thread
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        initiateBackground((Service)context);
+                    } finally {
+                        nm.cancel(NOTIFICATION_SYNC);
+                    }
                 }
-            }
-        }).start();
+            }).start();
+        }
     }
 
     // --- synchronization logic
@@ -212,10 +227,6 @@ public abstract class SyncProvider<TYPE extends TaskContainer> {
                     remote = pull(remote);
                     remote.task.setId(local.task.getId());
                     data.remoteUpdated.set(remoteIndex, remote);
-
-                    // if remote is deleted, undelete it, since we just created
-                    if(remote.task.isDeleted())
-                        remote.task.setValue(Task.DELETION_DATE, 0L);
 
                 } else {
                     create(local);
@@ -288,6 +299,12 @@ public abstract class SyncProvider<TYPE extends TaskContainer> {
         length = data.remoteUpdated.size();
         for(int i = 0; i < length; i++) {
             TYPE remote = data.remoteUpdated.get(i);
+
+            // don't synchronize new & deleted / completed tasks
+            if(!remote.task.isSaved() && (remote.task.isDeleted() ||
+                    remote.task.isCompleted()))
+                continue;
+
             try {
                 write(remote);
             } catch (Exception e) {
