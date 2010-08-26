@@ -8,7 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.todoroo.andlib.ContextManager;
+import com.todoroo.andlib.service.ContextManager;
 import com.todoroo.astrid.api.AstridApiConstants;
 import com.todoroo.astrid.api.SyncAction;
 

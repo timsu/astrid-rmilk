@@ -2,8 +2,8 @@ package org.weloveastrid.rmilk.data;
 
 import org.weloveastrid.rmilk.sync.MilkTaskContainer;
 
-import com.todoroo.andlib.Property.IntegerProperty;
-import com.todoroo.andlib.Property.LongProperty;
+import com.todoroo.andlib.data.Property.IntegerProperty;
+import com.todoroo.andlib.data.Property.LongProperty;
 import com.todoroo.astrid.data.Metadata;
 
 /**
@@ -11,12 +11,12 @@ import com.todoroo.astrid.data.Metadata;
  * @author Tim Su <tim@todoroo.com>
  *
  */
-public class MilkTask {
+public class MilkTaskFields {
 
     /** metadata key */
     public static final String METADATA_KEY = "rmilk"; //$NON-NLS-1$
 
-    /** {@link MilkList} id */
+    /** {@link MilkListFields} id */
     public static final LongProperty LIST_ID = new LongProperty(Metadata.TABLE,
             Metadata.VALUE1.name);
 
@@ -40,10 +40,10 @@ public class MilkTask {
     public static Metadata create(MilkTaskContainer container) {
         Metadata metadata = new Metadata();
         metadata.setValue(Metadata.KEY, METADATA_KEY);
-        metadata.setValue(MilkTask.LIST_ID, container.listId);
-        metadata.setValue(MilkTask.TASK_SERIES_ID, container.taskSeriesId);
-        metadata.setValue(MilkTask.TASK_ID, container.taskId);
-        metadata.setValue(MilkTask.REPEATING, container.repeating ? 1 : 0);
+        metadata.setValue(MilkTaskFields.LIST_ID, container.listId);
+        metadata.setValue(MilkTaskFields.TASK_SERIES_ID, container.taskSeriesId);
+        metadata.setValue(MilkTaskFields.TASK_ID, container.taskId);
+        metadata.setValue(MilkTaskFields.REPEATING, container.repeating ? 1 : 0);
 
         return metadata;
     }

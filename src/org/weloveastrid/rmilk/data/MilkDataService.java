@@ -15,20 +15,20 @@ import org.weloveastrid.rmilk.sync.MilkTaskContainer;
 import android.content.Context;
 import android.database.CursorJoiner;
 
-import com.todoroo.andlib.Criterion;
-import com.todoroo.andlib.Order;
-import com.todoroo.andlib.Property;
-import com.todoroo.andlib.Query;
-import com.todoroo.andlib.TodorooCursor;
+import com.todoroo.andlib.data.Property;
+import com.todoroo.andlib.data.TodorooCursor;
+import com.todoroo.andlib.sql.Criterion;
+import com.todoroo.andlib.sql.Order;
+import com.todoroo.andlib.sql.Query;
 import com.todoroo.astrid.data.Metadata;
-import com.todoroo.astrid.data.MetadataDao;
-import com.todoroo.astrid.data.MetadataDao.MetadataCriteria;
+import com.todoroo.astrid.data.MetadataApiDao;
+import com.todoroo.astrid.data.MetadataApiDao.MetadataCriteria;
 import com.todoroo.astrid.data.StoreObject;
-import com.todoroo.astrid.data.StoreObjectDao;
-import com.todoroo.astrid.data.StoreObjectDao.StoreObjectCriteria;
+import com.todoroo.astrid.data.StoreObjectApiDao;
+import com.todoroo.astrid.data.StoreObjectApiDao.StoreObjectCriteria;
 import com.todoroo.astrid.data.Task;
-import com.todoroo.astrid.data.TaskDao;
-import com.todoroo.astrid.data.TaskDao.TaskCriteria;
+import com.todoroo.astrid.data.TaskApiDao;
+import com.todoroo.astrid.data.TaskApiDao.TaskCriteria;
 
 public final class MilkDataService {
 
@@ -47,17 +47,17 @@ public final class MilkDataService {
 
     // --- instance variables
 
-    private final TaskDao taskDao;
-    private final MetadataDao metadataDao;
-    private final StoreObjectDao storeObjectDao;
+    private final TaskApiDao taskDao;
+    private final MetadataApiDao metadataDao;
+    private final StoreObjectApiDao storeObjectDao;
 
     static final Random random = new Random();
 
     private MilkDataService(Context context) {
         // prevent instantiation
-        taskDao = new TaskDao(context);
-        storeObjectDao = new StoreObjectDao(context);
-        metadataDao = new MetadataDao(context);
+        taskDao = new TaskApiDao(context);
+        storeObjectDao = new StoreObjectApiDao(context);
+        metadataDao = new MetadataApiDao(context);
     }
 
     // --- task and metadata methods
@@ -66,7 +66,7 @@ public final class MilkDataService {
      * Clears RTM metadata information. Used when user logs out of RTM
      */
     public void clearMetadata() {
-        metadataDao.deleteWhere(Metadata.KEY.eq(MilkTask.METADATA_KEY));
+        metadataDao.deleteWhere(Metadata.KEY.eq(MilkTaskFields.METADATA_KEY));
     }
 
     /**
@@ -92,7 +92,7 @@ public final class MilkDataService {
      */
     private TodorooCursor<Metadata> getMilkTaskMetadata() {
         return metadataDao.query(Query.select(Metadata.TASK).where(
-                MetadataCriteria.withKey(MilkTask.METADATA_KEY)).orderBy(Order.asc(Metadata.TASK)));
+                MetadataCriteria.withKey(MilkTaskFields.METADATA_KEY)).orderBy(Order.asc(Metadata.TASK)));
     }
 
     /**
@@ -151,9 +151,9 @@ public final class MilkDataService {
         if(remoteTask.task.getId() != Task.NO_ID)
             return;
         TodorooCursor<Metadata> cursor = metadataDao.query(Query.select(Metadata.TASK).
-                where(Criterion.and(MetadataCriteria.withKey(MilkTask.METADATA_KEY),
-                        MilkTask.TASK_SERIES_ID.eq(remoteTask.taskSeriesId),
-                        MilkTask.TASK_ID.eq(remoteTask.taskId))));
+                where(Criterion.and(MetadataCriteria.withKey(MilkTaskFields.METADATA_KEY),
+                        MilkTaskFields.TASK_SERIES_ID.eq(remoteTask.taskSeriesId),
+                        MilkTaskFields.TASK_ID.eq(remoteTask.taskId))));
         try {
             if(cursor.getCount() == 0)
                 return;
@@ -171,11 +171,11 @@ public final class MilkDataService {
     public void saveTaskAndMetadata(MilkTaskContainer task) {
         taskDao.save(task.task);
 
-        task.metadata.add(MilkTask.create(task));
+        task.metadata.add(MilkTaskFields.create(task));
         metadataDao.synchronizeMetadata(task.task.getId(), task.metadata,
                 Criterion.or(MetadataCriteria.withKey(TAG_KEY),
-                        MetadataCriteria.withKey(MilkTask.METADATA_KEY),
-                        MetadataCriteria.withKey(MilkNote.METADATA_KEY)));
+                        MetadataCriteria.withKey(MilkTaskFields.METADATA_KEY),
+                        MetadataCriteria.withKey(MilkNoteFields.METADATA_KEY)));
     }
 
     /**
@@ -191,8 +191,8 @@ public final class MilkDataService {
         TodorooCursor<Metadata> metadataCursor = metadataDao.query(Query.select(Metadata.PROPERTIES).
                 where(Criterion.and(MetadataCriteria.byTask(task.getId()),
                         Criterion.or(MetadataCriteria.withKey(TAG_KEY),
-                                MetadataCriteria.withKey(MilkTask.METADATA_KEY),
-                                MetadataCriteria.withKey(MilkNote.METADATA_KEY)))));
+                                MetadataCriteria.withKey(MilkTaskFields.METADATA_KEY),
+                                MetadataCriteria.withKey(MilkNoteFields.METADATA_KEY)))));
         try {
             for(metadataCursor.moveToFirst(); !metadataCursor.isAfterLast(); metadataCursor.moveToNext()) {
                 metadata.add(new Metadata(metadataCursor));
@@ -210,8 +210,8 @@ public final class MilkDataService {
      */
     public Metadata getTaskMetadata(long taskId) {
         TodorooCursor<Metadata> cursor = metadataDao.query(Query.select(
-                MilkTask.LIST_ID, MilkTask.TASK_SERIES_ID, MilkTask.TASK_ID, MilkTask.REPEATING).where(
-                MetadataCriteria.byTaskAndwithKey(taskId, MilkTask.METADATA_KEY)));
+                MilkTaskFields.LIST_ID, MilkTaskFields.TASK_SERIES_ID, MilkTaskFields.TASK_ID, MilkTaskFields.REPEATING).where(
+                MetadataCriteria.byTaskAndwithKey(taskId, MilkTaskFields.METADATA_KEY)));
         try {
             if(cursor.getCount() == 0)
                 return null;
@@ -227,7 +227,7 @@ public final class MilkDataService {
      */
     public TodorooCursor<Metadata> getTaskNotesCursor(long taskId) {
         TodorooCursor<Metadata> cursor = metadataDao.query(Query.select(Metadata.PROPERTIES).
-                where(MetadataCriteria.byTaskAndwithKey(taskId, MilkNote.METADATA_KEY)));
+                where(MetadataCriteria.byTaskAndwithKey(taskId, MilkNoteFields.METADATA_KEY)));
         return cursor;
     }
 
@@ -243,7 +243,7 @@ public final class MilkDataService {
             return;
 
         TodorooCursor<StoreObject> cursor = storeObjectDao.query(Query.select(StoreObject.PROPERTIES).
-                where(StoreObjectCriteria.byType(MilkList.TYPE)).orderBy(Order.asc(MilkList.POSITION)));
+                where(StoreObjectCriteria.byType(MilkListFields.TYPE)).orderBy(Order.asc(MilkListFields.POSITION)));
         try {
             lists = new StoreObject[cursor.getCount()];
             for(int i = 0; i < lists.length; i++) {
@@ -282,7 +282,7 @@ public final class MilkDataService {
             long id = Long.parseLong(remote.getValue().getId());
             StoreObject local = null;
             for(StoreObject list : lists) {
-                if(list.getValue(MilkList.REMOTE_ID).equals(id)) {
+                if(list.getValue(MilkListFields.REMOTE_ID).equals(id)) {
                     local = list;
                     break;
                 }
@@ -291,11 +291,11 @@ public final class MilkDataService {
             if(local == null)
                 local = new StoreObject();
 
-            local.setValue(StoreObject.TYPE, MilkList.TYPE);
-            local.setValue(MilkList.REMOTE_ID, id);
-            local.setValue(MilkList.NAME, remote.getValue().getName());
-            local.setValue(MilkList.POSITION, remote.getValue().getPosition());
-            local.setValue(MilkList.ARCHIVED, remote.getValue().isArchived() ? 1 : 0);
+            local.setValue(StoreObject.TYPE, MilkListFields.TYPE);
+            local.setValue(MilkListFields.REMOTE_ID, id);
+            local.setValue(MilkListFields.NAME, remote.getValue().getName());
+            local.setValue(MilkListFields.POSITION, remote.getValue().getPosition());
+            local.setValue(MilkListFields.ARCHIVED, remote.getValue().isArchived() ? 1 : 0);
             storeObjectDao.save(local);
 
             if(remote.getValue().isInbox()) {
@@ -316,8 +316,8 @@ public final class MilkDataService {
     public String getListName(long listId) {
         readLists();
         for(StoreObject list : lists)
-            if(list.getValue(MilkList.REMOTE_ID).equals(listId))
-                return list.getValue(MilkList.NAME);
+            if(list.getValue(MilkListFields.REMOTE_ID).equals(listId))
+                return list.getValue(MilkListFields.NAME);
         return null;
     }
 

@@ -4,28 +4,28 @@
 package org.weloveastrid.rmilk;
 
 import org.weloveastrid.rmilk.data.MilkDataService;
-import org.weloveastrid.rmilk.data.MilkList;
-import org.weloveastrid.rmilk.data.MilkTask;
+import org.weloveastrid.rmilk.data.MilkListFields;
+import org.weloveastrid.rmilk.data.MilkTaskFields;
 
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 
-import com.todoroo.andlib.ContextManager;
-import com.todoroo.andlib.Criterion;
-import com.todoroo.andlib.Join;
-import com.todoroo.andlib.QueryTemplate;
+import com.todoroo.andlib.service.ContextManager;
+import com.todoroo.andlib.sql.Criterion;
+import com.todoroo.andlib.sql.Join;
+import com.todoroo.andlib.sql.QueryTemplate;
 import com.todoroo.astrid.api.AstridApiConstants;
 import com.todoroo.astrid.api.Filter;
 import com.todoroo.astrid.api.FilterCategory;
 import com.todoroo.astrid.api.FilterListHeader;
 import com.todoroo.astrid.api.FilterListItem;
 import com.todoroo.astrid.data.Metadata;
-import com.todoroo.astrid.data.MetadataDao.MetadataCriteria;
+import com.todoroo.astrid.data.MetadataApiDao.MetadataCriteria;
 import com.todoroo.astrid.data.StoreObject;
 import com.todoroo.astrid.data.Task;
-import com.todoroo.astrid.data.TaskDao.TaskCriteria;
+import com.todoroo.astrid.data.TaskApiDao.TaskCriteria;
 
 /**
  * Exposes filters based on RTM lists
@@ -36,20 +36,20 @@ import com.todoroo.astrid.data.TaskDao.TaskCriteria;
 public class MilkFilterExposer extends BroadcastReceiver {
 
     private Filter filterFromList(Context context, StoreObject list) {
-        String listName = list.getValue(MilkList.NAME);
+        String listName = list.getValue(MilkListFields.NAME);
         String title = context.getString(R.string.rmilk_FEx_list_title,
                 listName);
         ContentValues values = new ContentValues();
-        values.put(Metadata.KEY.name, MilkTask.METADATA_KEY);
-        values.put(MilkTask.LIST_ID.name, list.getValue(MilkList.REMOTE_ID));
-        values.put(MilkTask.TASK_SERIES_ID.name, 0);
-        values.put(MilkTask.TASK_ID.name, 0);
-        values.put(MilkTask.REPEATING.name, 0);
+        values.put(Metadata.KEY.name, MilkTaskFields.METADATA_KEY);
+        values.put(MilkTaskFields.LIST_ID.name, list.getValue(MilkListFields.REMOTE_ID));
+        values.put(MilkTaskFields.TASK_SERIES_ID.name, 0);
+        values.put(MilkTaskFields.TASK_ID.name, 0);
+        values.put(MilkTaskFields.REPEATING.name, 0);
         Filter filter = new Filter(listName, title, new QueryTemplate().join(
                 Join.left(Metadata.TABLE, Task.ID.eq(Metadata.TASK))).where(Criterion.and(
-                        MetadataCriteria.withKey(MilkTask.METADATA_KEY),
+                        MetadataCriteria.withKey(MilkTaskFields.METADATA_KEY),
                         TaskCriteria.activeAndVisible(),
-                        MilkTask.LIST_ID.eq(list.getValue(MilkList.REMOTE_ID)))),
+                        MilkTaskFields.LIST_ID.eq(list.getValue(MilkListFields.REMOTE_ID)))),
                 values);
 
         return filter;

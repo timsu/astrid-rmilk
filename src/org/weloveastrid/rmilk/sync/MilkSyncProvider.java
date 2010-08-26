@@ -10,8 +10,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
-import org.weloveastrid.misc.SyncProvider;
-import org.weloveastrid.misc.TaskContainer;
 import org.weloveastrid.rmilk.MilkBackgroundService;
 import org.weloveastrid.rmilk.MilkLoginActivity;
 import org.weloveastrid.rmilk.MilkLoginActivity.SyncLoginCallback;
@@ -31,7 +29,7 @@ import org.weloveastrid.rmilk.api.data.RtmTaskNote;
 import org.weloveastrid.rmilk.api.data.RtmTaskSeries;
 import org.weloveastrid.rmilk.api.data.RtmTasks;
 import org.weloveastrid.rmilk.data.MilkDataService;
-import org.weloveastrid.rmilk.data.MilkNote;
+import org.weloveastrid.rmilk.data.MilkNoteFields;
 
 import android.app.Activity;
 import android.app.Notification;
@@ -44,15 +42,16 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.todoroo.andlib.AndroidUtilities;
-import com.todoroo.andlib.ContextManager;
-import com.todoroo.andlib.DateUtilities;
-import com.todoroo.andlib.DialogUtilities;
-import com.todoroo.andlib.Property;
-import com.todoroo.andlib.TodorooCursor;
+import com.todoroo.andlib.data.Property;
+import com.todoroo.andlib.data.TodorooCursor;
+import com.todoroo.andlib.service.ContextManager;
+import com.todoroo.andlib.utility.AndroidUtilities;
+import com.todoroo.andlib.utility.DateUtilities;
+import com.todoroo.andlib.utility.DialogUtilities;
 import com.todoroo.astrid.api.AstridApiConstants;
 import com.todoroo.astrid.data.Metadata;
 import com.todoroo.astrid.data.Task;
+import com.todoroo.astrid.sync.SyncProvider;
 
 public class MilkSyncProvider extends SyncProvider<MilkTaskContainer> {
 
@@ -374,7 +373,7 @@ public class MilkSyncProvider extends SyncProvider<MilkTaskContainer> {
      * @param remoteTask remote task proxy
      * @return
      */
-    private boolean shouldTransmit(TaskContainer task, Property<?> property, TaskContainer remoteTask) {
+    private boolean shouldTransmit(MilkTaskContainer task, Property<?> property, MilkTaskContainer remoteTask) {
         if(!task.task.containsValue(property))
             return false;
 
@@ -468,7 +467,7 @@ public class MilkSyncProvider extends SyncProvider<MilkTaskContainer> {
 
         // notes
         if(shouldTransmit(local, Task.NOTES, remote)) {
-            String[] titleAndText = MilkNote.fromNoteField(local.task.getValue(Task.NOTES));
+            String[] titleAndText = MilkNoteFields.fromNoteField(local.task.getValue(Task.NOTES));
             List<RtmTaskNote> notes = null;
             if(remote != null && remote.remote.getNotes() != null)
                 notes = remote.remote.getNotes().getNotes();
@@ -524,9 +523,9 @@ public class MilkSyncProvider extends SyncProvider<MilkTaskContainer> {
             for(RtmTaskNote note : rtmTaskSeries.getNotes().getNotes()) {
                 if(firstNote) {
                     firstNote = false;
-                    task.setValue(Task.NOTES, MilkNote.toNoteField(note));
+                    task.setValue(Task.NOTES, MilkNoteFields.toNoteField(note));
                 } else
-                    metadata.add(MilkNote.create(note));
+                    metadata.add(MilkNoteFields.create(note));
             }
         }
 
@@ -578,7 +577,7 @@ public class MilkSyncProvider extends SyncProvider<MilkTaskContainer> {
     }
 
     @Override
-    protected void updateNotification(Context context, Notification notification) {
+    protected int updateNotification(Context context, Notification notification) {
         String notificationTitle = context.getString(R.string.rmilk_notification_title);
         Intent intent = new Intent(context, MilkPreferences.class);
         PendingIntent notificationIntent = PendingIntent.getActivity(context, 0,
@@ -586,7 +585,7 @@ public class MilkSyncProvider extends SyncProvider<MilkTaskContainer> {
         notification.setLatestEventInfo(context,
                 notificationTitle, context.getString(R.string.SyP_progress),
                 notificationIntent);
-        return ;
+        return 0;
     }
 
     @Override

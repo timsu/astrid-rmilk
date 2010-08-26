@@ -1,8 +1,9 @@
 package org.weloveastrid.rmilk;
 
-import org.weloveastrid.misc.SyncProviderPreferences;
-import org.weloveastrid.misc.SyncProviderUtilities;
 import org.weloveastrid.rmilk.sync.MilkSyncProvider;
+
+import com.todoroo.astrid.sync.SyncProviderPreferences;
+import com.todoroo.astrid.sync.SyncProviderUtilities;
 
 /**
  * Displays synchronization preferences and an action panel so users can

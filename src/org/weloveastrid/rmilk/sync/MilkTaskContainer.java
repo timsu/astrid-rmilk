@@ -3,12 +3,12 @@ package org.weloveastrid.rmilk.sync;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.weloveastrid.misc.TaskContainer;
 import org.weloveastrid.rmilk.api.data.RtmTaskSeries;
-import org.weloveastrid.rmilk.data.MilkTask;
+import org.weloveastrid.rmilk.data.MilkTaskFields;
 
 import com.todoroo.astrid.data.Metadata;
 import com.todoroo.astrid.data.Task;
+import com.todoroo.astrid.sync.SyncContainer;
 
 /**
  * RTM Task Container
@@ -16,7 +16,7 @@ import com.todoroo.astrid.data.Task;
  * @author Tim Su <tim@todoroo.com>
  *
  */
-public class MilkTaskContainer extends TaskContainer {
+public class MilkTaskContainer extends SyncContainer {
     public long listId, taskSeriesId, taskId;
     public boolean repeating;
     public RtmTaskSeries remote;
@@ -44,15 +44,15 @@ public class MilkTaskContainer extends TaskContainer {
         this(task, metadata, 0, 0, 0, false, null);
         for(Iterator<Metadata> iterator = metadata.iterator(); iterator.hasNext(); ) {
             Metadata item = iterator.next();
-            if(MilkTask.METADATA_KEY.equals(item.getValue(Metadata.KEY))) {
-                if(item.containsNonNullValue(MilkTask.LIST_ID))
-                    listId = item.getValue(MilkTask.LIST_ID);
-                if(item.containsNonNullValue(MilkTask.TASK_SERIES_ID))
-                    taskSeriesId = item.getValue(MilkTask.TASK_SERIES_ID);
-                if(item.containsNonNullValue(MilkTask.TASK_ID))
-                    taskId = item.getValue(MilkTask.TASK_ID);
-                if(item.containsNonNullValue(MilkTask.REPEATING))
-                    repeating = item.getValue(MilkTask.REPEATING) == 1;
+            if(MilkTaskFields.METADATA_KEY.equals(item.getValue(Metadata.KEY))) {
+                if(item.containsNonNullValue(MilkTaskFields.LIST_ID))
+                    listId = item.getValue(MilkTaskFields.LIST_ID);
+                if(item.containsNonNullValue(MilkTaskFields.TASK_SERIES_ID))
+                    taskSeriesId = item.getValue(MilkTaskFields.TASK_SERIES_ID);
+                if(item.containsNonNullValue(MilkTaskFields.TASK_ID))
+                    taskId = item.getValue(MilkTaskFields.TASK_ID);
+                if(item.containsNonNullValue(MilkTaskFields.REPEATING))
+                    repeating = item.getValue(MilkTaskFields.REPEATING) == 1;
                 iterator.remove();
                 break;
             }

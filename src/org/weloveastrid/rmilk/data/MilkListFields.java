@@ -4,9 +4,9 @@
 package org.weloveastrid.rmilk.data;
 
 
-import com.todoroo.andlib.Property.IntegerProperty;
-import com.todoroo.andlib.Property.LongProperty;
-import com.todoroo.andlib.Property.StringProperty;
+import com.todoroo.andlib.data.Property.IntegerProperty;
+import com.todoroo.andlib.data.Property.LongProperty;
+import com.todoroo.andlib.data.Property.StringProperty;
 import com.todoroo.astrid.data.StoreObject;
 
 /**
@@ -15,7 +15,7 @@ import com.todoroo.astrid.data.StoreObject;
  * @author Tim Su <tim@todoroo.com>
  *
  */
-public class MilkList {
+public class MilkListFields {
 
     /** type*/
     public static final String TYPE = "rmilk-list"; //$NON-NLS-1$

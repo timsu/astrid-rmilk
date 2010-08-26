@@ -28,7 +28,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 
-import com.todoroo.andlib.DialogUtilities;
+import com.todoroo.andlib.utility.DialogUtilities;
 
 /**
  * This activity displays a <code>WebView</code> that allows users to log in to the

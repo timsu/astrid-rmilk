@@ -3,7 +3,7 @@
  */
 package org.weloveastrid.rmilk;
 
-import org.weloveastrid.misc.SyncProviderUtilities;
+import com.todoroo.astrid.sync.SyncProviderUtilities;
 
 /**
  * Constants and preferences for RTM plugin

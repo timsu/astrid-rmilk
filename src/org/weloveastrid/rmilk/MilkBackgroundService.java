@@ -10,8 +10,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.todoroo.andlib.ContextManager;
-import com.todoroo.andlib.DateUtilities;
+import com.todoroo.andlib.service.ContextManager;
+import com.todoroo.andlib.utility.DateUtilities;
 
 /**
  * SynchronizationService is the service that performs Astrid's background

@@ -4,8 +4,8 @@ import org.weloveastrid.rmilk.api.data.RtmTaskNote;
 
 import android.text.TextUtils;
 
-import com.todoroo.andlib.Property.LongProperty;
-import com.todoroo.andlib.Property.StringProperty;
+import com.todoroo.andlib.data.Property.LongProperty;
+import com.todoroo.andlib.data.Property.StringProperty;
 import com.todoroo.astrid.data.Metadata;
 
 /**
@@ -16,7 +16,7 @@ import com.todoroo.astrid.data.Metadata;
  * @author Tim Su <tim@todoroo.com>
  *
  */
-public class MilkNote {
+public class MilkNoteFields {
 
     /** metadata key */
     public static final String METADATA_KEY = "rmilk-note"; //$NON-NLS-1$

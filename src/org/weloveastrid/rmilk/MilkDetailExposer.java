@@ -4,15 +4,15 @@
 package org.weloveastrid.rmilk;
 
 import org.weloveastrid.rmilk.data.MilkDataService;
-import org.weloveastrid.rmilk.data.MilkNote;
-import org.weloveastrid.rmilk.data.MilkTask;
+import org.weloveastrid.rmilk.data.MilkNoteFields;
+import org.weloveastrid.rmilk.data.MilkTaskFields;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.todoroo.andlib.ContextManager;
-import com.todoroo.andlib.TodorooCursor;
+import com.todoroo.andlib.data.TodorooCursor;
+import com.todoroo.andlib.service.ContextManager;
 import com.todoroo.astrid.api.AstridApiConstants;
 import com.todoroo.astrid.data.Metadata;
 
@@ -62,7 +62,7 @@ public class MilkDetailExposer extends BroadcastReceiver {
         StringBuilder builder = new StringBuilder();
 
         if(!extended) {
-            long listId = metadata.getValue(MilkTask.LIST_ID);
+            long listId = metadata.getValue(MilkTaskFields.LIST_ID);
             String listName = MilkDataService.getInstance(context).getListName(listId);
             // RTM list is out of date. don't display RTM stuff
             if(listName == null)
@@ -72,7 +72,7 @@ public class MilkDetailExposer extends BroadcastReceiver {
                 builder.append("<img src='silk_folder'/> ").append(listName).append(DETAIL_SEPARATOR); //$NON-NLS-1$
             }
 
-            int repeat = metadata.getValue(MilkTask.REPEATING);
+            int repeat = metadata.getValue(MilkTaskFields.REPEATING);
             if(repeat != 0) {
                 builder.append(context.getString(R.string.rmilk_TLA_repeat)).append(DETAIL_SEPARATOR);
             }
@@ -81,7 +81,7 @@ public class MilkDetailExposer extends BroadcastReceiver {
             try {
                 for(notesCursor.moveToFirst(); !notesCursor.isAfterLast(); notesCursor.moveToNext()) {
                     metadata.readFromCursor(notesCursor);
-                    builder.append(MilkNote.toTaskDetail(metadata)).append(DETAIL_SEPARATOR);
+                    builder.append(MilkNoteFields.toTaskDetail(metadata)).append(DETAIL_SEPARATOR);
                 }
             } finally {
                 notesCursor.close();
