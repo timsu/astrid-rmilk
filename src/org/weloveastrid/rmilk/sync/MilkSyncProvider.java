@@ -107,7 +107,8 @@ public class MilkSyncProvider extends SyncProvider<MilkTaskContainer> {
         } else {
             if(e instanceof ServiceInternalException)
                 e = ((ServiceInternalException)e).getEnclosedException();
-            message = e.toString();
+            if(e != null)
+                message = e.toString();
             Log.e(tag, "unhandled", e); //$NON-NLS-1$
         }
 
