@@ -7,7 +7,7 @@
     <uses-permission android:name="com.todoroo.astrid.READ" />
     <uses-permission android:name="com.todoroo.astrid.WRITE" />
     
-    <uses-sdk android:minSdkVersion="8" />
+    <uses-sdk android:minSdkVersion="3" />
     <uses-library android:name="com.todoroo.astrid.api" />
     <supports-screens />
       
@@ -30,14 +30,14 @@
         <activity android:name="org.weloveastrid.rmilk.MilkPreferences"
                   android:icon="@drawable/icon"
                   android:label="@string/rmilk_MPr_header">
+          <meta-data android:name="category"
+                     android:resource="@string/SyP_label" />
           <intent-filter>   
-            <action android:name="com.todoroo.astrid.TASK_LIST_MENU" />
+            <action android:name="com.todoroo.astrid.SETTINGS" />
             <category android:name="android.intent.category.DEFAULT" />
           </intent-filter>
           <intent-filter>   
-            <!-- temporary for debugging -->
             <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
           </intent-filter>
         </activity>
         <service android:name="org.weloveastrid.rmilk.MilkBackgroundService"/>

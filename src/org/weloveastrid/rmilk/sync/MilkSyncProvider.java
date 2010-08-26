@@ -19,7 +19,6 @@ import org.weloveastrid.rmilk.MilkPreferences;
 import org.weloveastrid.rmilk.MilkUtilities;
 import org.weloveastrid.rmilk.R;
 import org.weloveastrid.rmilk.api.ApplicationInfo;
-import org.weloveastrid.rmilk.api.ServiceException;
 import org.weloveastrid.rmilk.api.ServiceImpl;
 import org.weloveastrid.rmilk.api.ServiceInternalException;
 import org.weloveastrid.rmilk.api.data.RtmAuth.Perms;
@@ -48,6 +47,7 @@ import android.util.Log;
 import com.todoroo.andlib.AndroidUtilities;
 import com.todoroo.andlib.ContextManager;
 import com.todoroo.andlib.DateUtilities;
+import com.todoroo.andlib.DialogUtilities;
 import com.todoroo.andlib.Property;
 import com.todoroo.andlib.TodorooCursor;
 import com.todoroo.astrid.api.AstridApiConstants;
@@ -89,7 +89,10 @@ public class MilkSyncProvider extends SyncProvider<MilkTaskContainer> {
      */
     @Override
     protected void handleException(String tag, Exception e, boolean showError) {
+        final Context context = ContextManager.getContext();
         MilkUtilities.INSTANCE.setLastError(e.toString());
+
+        String message = null;
 
         // occurs when application was closed
         if(e instanceof IllegalStateException) {
@@ -100,11 +103,17 @@ public class MilkSyncProvider extends SyncProvider<MilkTaskContainer> {
                 ((ServiceInternalException)e).getEnclosedException() instanceof
                 IOException) {
             Exception enclosedException = ((ServiceInternalException)e).getEnclosedException();
+            message = context.getString(R.string.rmilk_ioerror);
             Log.e(tag, "ioexception", enclosedException); //$NON-NLS-1$
         } else {
             if(e instanceof ServiceInternalException)
                 e = ((ServiceInternalException)e).getEnclosedException();
+            message = e.toString();
             Log.e(tag, "unhandled", e); //$NON-NLS-1$
+        }
+
+        if(showError && context instanceof Activity && message != null) {
+            DialogUtilities.okDialog((Activity)context, message, null);
         }
     }
 
@@ -192,7 +201,7 @@ public class MilkSyncProvider extends SyncProvider<MilkTaskContainer> {
             try {
                 initializeService(null);
                 url = rtmService.beginAuthorization(Perms.delete);
-            } catch (ServiceException e) {
+            } catch (Exception e) {
                 handleException("rmilk-auth", e, true);
                 return;
             }
@@ -223,6 +232,7 @@ public class MilkSyncProvider extends SyncProvider<MilkTaskContainer> {
         } else {
             activity.startService(new Intent(MilkBackgroundService.SYNC_ACTION, null,
                     activity, MilkBackgroundService.class));
+            activity.finish();
         }
     }
 

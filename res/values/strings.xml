@@ -49,6 +49,9 @@
 
     <!-- Milk Preferences Title -->    
     <string name="rmilk_MPr_header">Remember the Milk</string>
+    
+    <!-- Sync Label: used in menu to denote synchronization -->
+    <string name="SyP_label">Synchronization</string>  
 
     <!-- ======================== SyncPreferences ========================== -->
     
