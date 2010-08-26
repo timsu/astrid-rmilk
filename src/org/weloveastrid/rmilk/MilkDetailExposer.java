@@ -11,6 +11,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.todoroo.andlib.ContextManager;
 import com.todoroo.andlib.TodorooCursor;
 import com.todoroo.astrid.api.AstridApiConstants;
 import com.todoroo.astrid.data.Metadata;
@@ -30,6 +31,8 @@ public class MilkDetailExposer extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        ContextManager.setContext(context);
+
         // if we aren't logged in, don't expose features
         if(!MilkUtilities.INSTANCE.isLoggedIn())
             return;

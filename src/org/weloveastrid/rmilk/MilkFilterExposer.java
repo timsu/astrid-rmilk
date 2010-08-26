@@ -12,6 +12,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 
+import com.todoroo.andlib.ContextManager;
 import com.todoroo.andlib.Criterion;
 import com.todoroo.andlib.Join;
 import com.todoroo.andlib.QueryTemplate;
@@ -56,6 +57,8 @@ public class MilkFilterExposer extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        ContextManager.setContext(context);
+
         // if we aren't logged in, don't expose features
         if(!MilkUtilities.INSTANCE.isLoggedIn())
             return;
