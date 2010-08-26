@@ -158,7 +158,7 @@ public final class MilkDataService {
             if(cursor.getCount() == 0)
                 return;
             cursor.moveToFirst();
-            remoteTask.task.setId(cursor.get(Task.ID));
+            remoteTask.task.setId(cursor.get(Metadata.TASK));
         } finally {
             cursor.close();
         }
