@@ -46,6 +46,10 @@
             <action android:name="android.intent.action.BOOT_COMPLETED" />
             <category android:name="android.intent.category.DEFAULT" />
           </intent-filter>
+          <intent-filter>
+            <action android:name="com.todoroo.astrid.STARTUP" />
+            <category android:name="android.intent.category.DEFAULT" />
+          </intent-filter>
         </receiver>
         <receiver android:name="org.weloveastrid.rmilk.MilkSyncActionExposer">
           <intent-filter>

@@ -16,6 +16,7 @@ public class MilkStartupReceiver extends BroadcastReceiver {
     public void onReceive(final Context context, Intent intent) {
         ContextManager.setContext(context);
         MilkBackgroundService.scheduleService();
+        MilkUtilities.INSTANCE.stopOngoing();
     }
 
 }
