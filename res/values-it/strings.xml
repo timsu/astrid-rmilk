@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- See the file "LICENSE" for the full license governing this code. -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- application name -->
+    <string name="app_name">Astrid Remember the Milk Plugin</string>
+
+    <!-- ====================== Plugin Boilerplate ========================= -->
+
+    <!-- label for RMilk button in Task Edit Activity -->
+    <string name="rmilk_EOE_button">Ricorda le impostazioni di Milk</string>
+    
+    <!-- task detail showing RTM repeat information -->
+    <string name="rmilk_TLA_repeat">RTM Repeating Task</string>
+    
+    <!--  task detail showing item needs to be synchronized -->
+    <string name="rmilk_TLA_sync">Necessita la sincronizzazione con RTM</string>
+
+    <!-- filters header: RTM -->
+    <string name="rmilk_FEx_header">Remember the Milk</string>
+    
+    <!-- filter category for RTM lists -->
+    <string name="rmilk_FEx_list">Liste</string>
+    
+    <!--  RTM list filter title (%s => list) -->
+    <string name="rmilk_FEx_list_title">LIsta RTM \'%s\'</string>
+    
+    <!-- ======================= MilkEditActivity ========================== -->
+    
+    <!--  RTM edit activity Title -->
+    <string name="rmilk_MEA_title">Remember the Milk</string>
+    
+    <!--  RTM edit List Edit Label -->
+    <string name="rmilk_MEA_list_label">Lista RTM:</string>
+    
+    <!--  RTM edit Repeat Label -->
+    <string name="rmilk_MEA_repeat_label">Stato di ripetizione RTM:</string>
+    
+    <!--  RTM edit Repeat Hint -->
+    <string name="rmilk_MEA_repeat_hint">in altre parole ogni settimana, dopo 14 giorni</string>
+    
+    <!-- ======================== MilkPreferences ========================== -->
+
+    <!-- Milk Preferences Title -->    
+    <string name="rmilk_MPr_header">Remember the Milk</string>
+    
+    <!-- ======================= MilkLoginActivity ========================= -->
+
+    <!-- RTM Login Instructions -->
+    <string name="rmilk_MLA_label">Per favore esegui l\'accesso e autorizza Astrid:</string>
+
+    <!-- Login Error Dialog (%s => message) -->
+    <string name="rmilk_MLA_error">Spiacenti,si è verificato un errore durante la verifica di accesso. Prova di nuovo. \n\n Messaggio di Errore: %s</string>
+    
+    <!-- ======================== Synchronization ========================== -->    
+    
+    <!-- title for notification tray when synchronizing -->
+    <string name="rmilk_notification_title">Astrid: Remember the Milk</string>
+    
+    <!-- Error msg when io exception with rmilk -->
+    <string name="rmilk_ioerror">Errore di connessione! Verificare la connessione Internet, o magari i server RTM (status.rememberthemilk.com), per le possibili soluzioni.</string>
+            
+
+
+</resources>

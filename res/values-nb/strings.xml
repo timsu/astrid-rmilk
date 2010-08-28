@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- See the file "LICENSE" for the full license governing this code. -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- application name -->
+    <string name="app_name">Astrid Remember the Milk Plugin</string>
+
+    <!-- ====================== Plugin Boilerplate ========================= -->
+
+    <!-- label for RMilk button in Task Edit Activity -->
+    <string name="rmilk_EOE_button">Remember the Milk Innstillinger</string>
+    
+    <!-- task detail showing RTM repeat information -->
+    <string name="rmilk_TLA_repeat">RTM gjentagende oppgave</string>
+    
+    <!--  task detail showing item needs to be synchronized -->
+    <string name="rmilk_TLA_sync">Trenger synkronisering med RTM</string>
+
+    <!-- filters header: RTM -->
+    <string name="rmilk_FEx_header">Remember the Milk</string>
+    
+    <!-- filter category for RTM lists -->
+    <string name="rmilk_FEx_list">Lister</string>
+    
+    <!--  RTM list filter title (%s => list) -->
+    <string name="rmilk_FEx_list_title">RTM Liste \'%s\'</string>
+    
+    <!-- ======================= MilkEditActivity ========================== -->
+    
+    <!--  RTM edit activity Title -->
+    <string name="rmilk_MEA_title">Remember the Milk</string>
+    
+    <!--  RTM edit List Edit Label -->
+    <string name="rmilk_MEA_list_label">RTM Liste:</string>
+    
+    <!--  RTM edit Repeat Label -->
+    <string name="rmilk_MEA_repeat_label">RTM gjentagende status:</string>
+    
+    <!--  RTM edit Repeat Hint -->
+    <string name="rmilk_MEA_repeat_hint">f.eks hver uke, etter 14 dager</string>
+    
+    <!-- ======================== MilkPreferences ========================== -->
+
+    <!-- Milk Preferences Title -->    
+    <string name="rmilk_MPr_header">Remember the Milk</string>
+    
+    <!-- ======================= MilkLoginActivity ========================= -->
+
+    <!-- RTM Login Instructions -->
+    <string name="rmilk_MLA_label">Vennligst logg inn og autoriser Astrid</string>
+
+    <!-- Login Error Dialog (%s => message) -->
+    <string name="rmilk_MLA_error">Beklager, kunne ikke verifisere innloggingen. Vennligst prøv igjen. \n\n Feilmelding: %s</string>
+    
+    <!-- ======================== Synchronization ========================== -->    
+    
+    <!-- title for notification tray when synchronizing -->
+    <string name="rmilk_notification_title">Astrid: Remember the Milk</string>
+    
+    <!-- Error msg when io exception with rmilk -->
+    <string name="rmilk_ioerror">Tilkoblings feil! Sjekk internettforbindelsen din, evt. RTM serverene (status.rememberthemilk.com), for mulig feilløsning.</string>
+            
+
+
+</resources>
