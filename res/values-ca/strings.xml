@@ -7,29 +7,23 @@
 
     <!-- ====================== Plugin Boilerplate ========================= -->
 
-    <!-- Sync Notification: message when sync service active -->
-    <string name="SyP_progress">Synchronizing your tasks...</string>
-    
-    <!-- Sync Notification: toast when sync activated from activity -->
-    <string name="SyP_progress_toast">Synchronizing...</string>
-
     <!-- label for RMilk button in Task Edit Activity -->
-    <string name="rmilk_EOE_button">Remember the Milk Settings</string>
+    <string name="rmilk_EOE_button">Configuració Remember the Milk</string>
     
     <!-- task detail showing RTM repeat information -->
-    <string name="rmilk_TLA_repeat">RTM Repeating Task</string>
+    <string name="rmilk_TLA_repeat">RTM Tasca Repetitiva</string>
     
     <!--  task detail showing item needs to be synchronized -->
-    <string name="rmilk_TLA_sync">Needs synchronization with RTM</string>
+    <string name="rmilk_TLA_sync">Necessita sincronitzar-se amb RTM</string>
 
     <!-- filters header: RTM -->
     <string name="rmilk_FEx_header">Remember the Milk</string>
     
     <!-- filter category for RTM lists -->
-    <string name="rmilk_FEx_list">Lists</string>
+    <string name="rmilk_FEx_list">Llistes</string>
     
     <!--  RTM list filter title (%s => list) -->
-    <string name="rmilk_FEx_list_title">RTM List \'%s\'</string>
+    <string name="rmilk_FEx_list_title">RTM Llista \'%s\'</string>
     
     <!-- ======================= MilkEditActivity ========================== -->
     
@@ -37,101 +31,26 @@
     <string name="rmilk_MEA_title">Remember the Milk</string>
     
     <!--  RTM edit List Edit Label -->
-    <string name="rmilk_MEA_list_label">RTM List:</string>
+    <string name="rmilk_MEA_list_label">RTM Llista:</string>
     
     <!--  RTM edit Repeat Label -->
-    <string name="rmilk_MEA_repeat_label">RTM Repeat Status:</string>
+    <string name="rmilk_MEA_repeat_label">RTM Estat de les Repeticions:</string>
     
     <!--  RTM edit Repeat Hint -->
-    <string name="rmilk_MEA_repeat_hint">i.e. every week, after 14 days</string>
+    <string name="rmilk_MEA_repeat_hint">p.e. cada setmana, després de 14 dies</string>
     
     <!-- ======================== MilkPreferences ========================== -->
 
     <!-- Milk Preferences Title -->    
     <string name="rmilk_MPr_header">Remember the Milk</string>
     
-    <!-- Sync Label: used in menu to denote synchronization -->
-    <string name="SyP_label">Synchronization</string>  
-
-    <!-- ======================== SyncPreferences ========================== -->
-    
-    <!-- RTM Status Group Label -->    
-    <string name="sync_SPr_group_status">Status</string>
-    
-    <!-- Sync Status: log in -->    
-    <string name="sync_status_loggedout">Not Logged In!</string>
-    <!-- Status: ongoing -->    
-    <string name="sync_status_ongoing">Sync Ongoing...</string>
-    <!-- Sync Status: success status (%s -> last sync date). Keep it short!-->    
-    <string name="sync_status_success">Last Sync: %s</string>
-    <!-- Sync Status: error status (%s -> last attempted sync date) -->    
-    <string name="sync_status_failed">Failed On: %s</string>
-    <!-- Sync Status: error subtitle (%s -> last successful sync date) -->    
-    <string name="sync_status_failed_subtitle">Last Successful Sync: %s</string>
-    <!-- Sync Status: never sync'd -->    
-    <string name="sync_status_never">Never Synchronized!</string>
-
-    <!-- RTM Options Group Label -->    
-    <string name="sync_SPr_group_options">Opcions</string>
-
-    <!-- Preference: Synchronization Interval Title -->    
-    <string name="sync_SPr_interval_title">Background Sync</string>
-    <!-- Preference: Synchronization Interval Description (when disabled) -->
-    <string name="sync_SPr_interval_desc_disabled">Background synchronization is disabled</string>    
-    <!-- Preference: Synchronization Interval Description (%s => setting) -->
-    <string name="sync_SPr_interval_desc">Currently set to: %s</string>
-    
-    <!-- Preference: Background Wifi Title -->  
-    <string name="sync_SPr_bgwifi_title">Wifi Only Setting</string>    
-    <!-- Preference: Background Wifi Description (enabled) -->
-    <string name="sync_SPr_bgwifi_desc_enabled">Background synchronization only happens when on Wifi</string>    
-    <!-- Preference: Background Wifi Description (disabled) -->
-    <string name="sync_SPr_bgwifi_desc_disabled">Background synchronization will always occur</string>
-    
-    <!-- Actions Group Label  -->
-    <string name="sync_SPr_group_actions">Accions</string>
-
-    <!-- Synchronize Now Button -->    
-    <string name="sync_SPr_sync">Sincronitzar Ara!</string>
-    <!-- Synchronize Now Button if not logged in-->    
-    <string name="sync_SPr_sync_log_in">Log In &amp; Synchronize!</string>
-    
-    <!-- Sync: Clear Data Title -->
-    <string name="sync_SPr_forget">Log Out</string>
-    <!-- Sync: Clear Data Description -->
-    <string name="sync_SPr_forget_description">Clears all synchronization data</string>
-
-    <!-- confirmation dialog for sync log out -->
-    <string name="sync_forget_confirm">Log out / clear synchronization data?</string>
-    
-    <string-array name="sync_SPr_interval_entries">
-        <!-- rmilk_MPr_interval_entries: Synchronization Intervals -->
-        <item>disable</item>
-        <item>every fifteen minutes</item>
-        <item>every thirty minutes</item>
-        <item>every hour</item>
-        <item>every three hours</item>
-        <item>every six hours</item>
-        <item>every twelve hours</item>
-        <item>every day</item>
-        <item>every three days</item>
-        <item>every week</item>
-    </string-array>
-
     <!-- ======================= MilkLoginActivity ========================= -->
 
     <!-- RTM Login Instructions -->
-    <string name="rmilk_MLA_label">Please Log In and Authorize Astrid:</string>
+    <string name="rmilk_MLA_label">Si us plau, inicia sessió i autoritza Astrid:</string>
 
-    <!-- Done Button -->
-    <string name="DLG_done">Fet</string>
-    
     <!-- Login Error Dialog (%s => message) -->
-    <string name="rmilk_MLA_error">
-Sorry, there was an error verifying your login. Please try again.
-\n\n
-Error Message: %s
-    </string>
+    <string name="rmilk_MLA_error">Ho sento, hi ha hagut un error verificant les credencials. Si us plau, torni-ho a intentar. \n\n Missatge d\'error: %s</string>
     
     <!-- ======================== Synchronization ========================== -->    
     
@@ -139,8 +58,7 @@ Error Message: %s
     <string name="rmilk_notification_title">Astrid: Remember the Milk</string>
     
     <!-- Error msg when io exception with rmilk -->
-    <string name="rmilk_ioerror">Connection Error! Check your Internet connection, 
-    or maybe RTM servers (status.rememberthemilk.com), for possible solutions.</string>
+    <string name="rmilk_ioerror">Error de connectivitat! Verifiqui la seva connexió, o potser els servidor de RTM (status.rememberthemilk.com), per possibles solucions.</string>
             
 
 

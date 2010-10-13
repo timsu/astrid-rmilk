@@ -7,12 +7,6 @@
 
     <!-- ====================== Plugin Boilerplate ========================= -->
 
-    <!-- Sync Notification: message when sync service active -->
-    <string name="SyP_progress">Probíhá synchronizace Vašich úkolů...</string>
-    
-    <!-- Sync Notification: toast when sync activated from activity -->
-    <string name="SyP_progress_toast">Sychronizuji...</string>
-
     <!-- label for RMilk button in Task Edit Activity -->
     <string name="rmilk_EOE_button">Nastavení Remember the Milk</string>
     
@@ -50,82 +44,11 @@
     <!-- Milk Preferences Title -->    
     <string name="rmilk_MPr_header">Remember the Milk</string>
     
-    <!-- Sync Label: used in menu to denote synchronization -->
-    <string name="SyP_label">Synchronization</string>  
-
-    <!-- ======================== SyncPreferences ========================== -->
-    
-    <!-- RTM Status Group Label -->    
-    <string name="sync_SPr_group_status">Stav</string>
-    
-    <!-- Sync Status: log in -->    
-    <string name="sync_status_loggedout">Prosím přihlaš se!</string>
-    <!-- Status: ongoing -->    
-    <string name="sync_status_ongoing">Probíhá synchronizace...</string>
-    <!-- Sync Status: success status (%s -> last sync date). Keep it short!-->    
-    <string name="sync_status_success">Poslední synchronizace: %s</string>
-    <!-- Sync Status: error status (%s -> last attempted sync date) -->    
-    <string name="sync_status_failed">Selhalo: %s</string>
-    <!-- Sync Status: error subtitle (%s -> last successful sync date) -->    
-    <string name="sync_status_failed_subtitle">Poslední úspěšná synchronizace: %s</string>
-    <!-- Sync Status: never sync'd -->    
-    <string name="sync_status_never">Nikdo nesynchronizováno!</string>
-
-    <!-- RTM Options Group Label -->    
-    <string name="sync_SPr_group_options">Možnosti</string>
-
-    <!-- Preference: Synchronization Interval Title -->    
-    <string name="sync_SPr_interval_title">Synchronizace na pozadí</string>
-    <!-- Preference: Synchronization Interval Description (when disabled) -->
-    <string name="sync_SPr_interval_desc_disabled">Synchronizace na pozadí je zakázána</string>    
-    <!-- Preference: Synchronization Interval Description (%s => setting) -->
-    <string name="sync_SPr_interval_desc">Současně nastaveno na: %s</string>
-    
-    <!-- Preference: Background Wifi Title -->  
-    <string name="sync_SPr_bgwifi_title">Nastavení jen pro Wifi</string>    
-    <!-- Preference: Background Wifi Description (enabled) -->
-    <string name="sync_SPr_bgwifi_desc_enabled">Synchronizovat na pozadí se bude pouze při zapnuté Wifi</string>    
-    <!-- Preference: Background Wifi Description (disabled) -->
-    <string name="sync_SPr_bgwifi_desc_disabled">Synchronizovat na pozadí se bude vždy</string>
-    
-    <!-- Actions Group Label  -->
-    <string name="sync_SPr_group_actions">Činnosti</string>
-
-    <!-- Synchronize Now Button -->    
-    <string name="sync_SPr_sync">Synchronizuj teď!</string>
-    <!-- Synchronize Now Button if not logged in-->    
-    <string name="sync_SPr_sync_log_in">Přihlásit se &amp; Synchronizovat!</string>
-    
-    <!-- Sync: Clear Data Title -->
-    <string name="sync_SPr_forget">Odhlásit se</string>
-    <!-- Sync: Clear Data Description -->
-    <string name="sync_SPr_forget_description">Vymazat všechny synchronizační data</string>
-
-    <!-- confirmation dialog for sync log out -->
-    <string name="sync_forget_confirm">Odhlásit se / vymazat synchronizační data?</string>
-    
-    <string-array name="sync_SPr_interval_entries">
-        <!-- rmilk_MPr_interval_entries: Synchronization Intervals -->
-        <item>zakázat</item>
-        <item>každých patnáct minut</item>
-        <item>každých třicet minut</item>
-        <item>každou hodinu</item>
-        <item>každé tři hodiny</item>
-        <item>každých šest hodin</item>
-        <item>každých dvanáct hodin</item>
-        <item>každý den</item>
-        <item>každé tři dny</item>
-        <item>každý týden</item>
-    </string-array>
-
     <!-- ======================= MilkLoginActivity ========================= -->
 
     <!-- RTM Login Instructions -->
     <string name="rmilk_MLA_label">Prosím přihlaš se a autorizuj Astrid:</string>
 
-    <!-- Done Button -->
-    <string name="DLG_done">Hotovo</string>
-    
     <!-- Login Error Dialog (%s => message) -->
     <string name="rmilk_MLA_error">Omlouvám se, nastala chyba při ověřování tvého přihlášení. Prosím, zkus to znovu. \n\n Chybová hláška: %s</string>
     

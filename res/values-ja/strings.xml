@@ -7,12 +7,6 @@
 
     <!-- ====================== Plugin Boilerplate ========================= -->
 
-    <!-- Sync Notification: message when sync service active -->
-    <string name="SyP_progress">タスクの同期中...</string>
-    
-    <!-- Sync Notification: toast when sync activated from activity -->
-    <string name="SyP_progress_toast">同期中...</string>
-
     <!-- label for RMilk button in Task Edit Activity -->
     <string name="rmilk_EOE_button">Remember the Milk の設定</string>
     
@@ -50,82 +44,11 @@
     <!-- Milk Preferences Title -->    
     <string name="rmilk_MPr_header">Remember the Milk</string>
     
-    <!-- Sync Label: used in menu to denote synchronization -->
-    <string name="SyP_label">Synchronization</string>  
-
-    <!-- ======================== SyncPreferences ========================== -->
-    
-    <!-- RTM Status Group Label -->    
-    <string name="sync_SPr_group_status">状況</string>
-    
-    <!-- Sync Status: log in -->    
-    <string name="sync_status_loggedout">ログインしてください!</string>
-    <!-- Status: ongoing -->    
-    <string name="sync_status_ongoing">Sync Ongoing...</string>
-    <!-- Sync Status: success status (%s -> last sync date). Keep it short!-->    
-    <string name="sync_status_success">前回の同期: %s</string>
-    <!-- Sync Status: error status (%s -> last attempted sync date) -->    
-    <string name="sync_status_failed">Failed On: %s</string>
-    <!-- Sync Status: error subtitle (%s -> last successful sync date) -->    
-    <string name="sync_status_failed_subtitle">Last Successful Sync: %s</string>
-    <!-- Sync Status: never sync'd -->    
-    <string name="sync_status_never">Never Synchronized!</string>
-
-    <!-- RTM Options Group Label -->    
-    <string name="sync_SPr_group_options">オプション</string>
-
-    <!-- Preference: Synchronization Interval Title -->    
-    <string name="sync_SPr_interval_title">バックグラウンド同期</string>
-    <!-- Preference: Synchronization Interval Description (when disabled) -->
-    <string name="sync_SPr_interval_desc_disabled">バックグラウンド同期は無効になっています</string>    
-    <!-- Preference: Synchronization Interval Description (%s => setting) -->
-    <string name="sync_SPr_interval_desc">現在の設定: %s</string>
-    
-    <!-- Preference: Background Wifi Title -->  
-    <string name="sync_SPr_bgwifi_title">Wifi Only Setting</string>    
-    <!-- Preference: Background Wifi Description (enabled) -->
-    <string name="sync_SPr_bgwifi_desc_enabled">Background synchronization only happens when on Wifi</string>    
-    <!-- Preference: Background Wifi Description (disabled) -->
-    <string name="sync_SPr_bgwifi_desc_disabled">Background synchronization will always occur</string>
-    
-    <!-- Actions Group Label  -->
-    <string name="sync_SPr_group_actions">アクション</string>
-
-    <!-- Synchronize Now Button -->    
-    <string name="sync_SPr_sync">すぐに同期!</string>
-    <!-- Synchronize Now Button if not logged in-->    
-    <string name="sync_SPr_sync_log_in">ログインと同期</string>
-    
-    <!-- Sync: Clear Data Title -->
-    <string name="sync_SPr_forget">ログアウト</string>
-    <!-- Sync: Clear Data Description -->
-    <string name="sync_SPr_forget_description">同期データをすべて削除します</string>
-
-    <!-- confirmation dialog for sync log out -->
-    <string name="sync_forget_confirm">Log out / clear synchronization data?</string>
-    
-    <string-array name="sync_SPr_interval_entries">
-        <!-- rmilk_MPr_interval_entries: Synchronization Intervals -->
-        <item>無効</item>
-        <item>15分毎</item>
-        <item>30分毎</item>
-        <item>1時間毎</item>
-        <item>3時間毎</item>
-        <item>6時間毎</item>
-        <item>12時間毎</item>
-        <item>毎日</item>
-        <item>3日に一度</item>
-        <item>毎週</item>
-    </string-array>
-
     <!-- ======================= MilkLoginActivity ========================= -->
 
     <!-- RTM Login Instructions -->
     <string name="rmilk_MLA_label">ログインしてAstridに権限を与えてください</string>
 
-    <!-- Done Button -->
-    <string name="DLG_done">完了</string>
-    
     <!-- Login Error Dialog (%s => message) -->
     <string name="rmilk_MLA_error">
 Sorry, there was an error verifying your login. Please try again.

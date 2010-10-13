@@ -7,12 +7,6 @@
 
     <!-- ====================== Plugin Boilerplate ========================= -->
 
-    <!-- Sync Notification: message when sync service active -->
-    <string name="SyP_progress">Synkroniserer oppgavene dine...</string>
-    
-    <!-- Sync Notification: toast when sync activated from activity -->
-    <string name="SyP_progress_toast">Synkroniserer...</string>
-
     <!-- label for RMilk button in Task Edit Activity -->
     <string name="rmilk_EOE_button">Remember the Milk Innstillinger</string>
     
@@ -50,82 +44,11 @@
     <!-- Milk Preferences Title -->    
     <string name="rmilk_MPr_header">Remember the Milk</string>
     
-    <!-- Sync Label: used in menu to denote synchronization -->
-    <string name="SyP_label">Synchronization</string>  
-
-    <!-- ======================== SyncPreferences ========================== -->
-    
-    <!-- RTM Status Group Label -->    
-    <string name="sync_SPr_group_status">Status</string>
-    
-    <!-- Sync Status: log in -->    
-    <string name="sync_status_loggedout">Vennligst logg inn!</string>
-    <!-- Status: ongoing -->    
-    <string name="sync_status_ongoing">Synkronisering pågår...</string>
-    <!-- Sync Status: success status (%s -> last sync date). Keep it short!-->    
-    <string name="sync_status_success">Siste synkronisering: %s</string>
-    <!-- Sync Status: error status (%s -> last attempted sync date) -->    
-    <string name="sync_status_failed">Feilet: %s</string>
-    <!-- Sync Status: error subtitle (%s -> last successful sync date) -->    
-    <string name="sync_status_failed_subtitle">Siste vellykkede synkronisering: %s</string>
-    <!-- Sync Status: never sync'd -->    
-    <string name="sync_status_never">Aldri synkronisert!</string>
-
-    <!-- RTM Options Group Label -->    
-    <string name="sync_SPr_group_options">Alternativer</string>
-
-    <!-- Preference: Synchronization Interval Title -->    
-    <string name="sync_SPr_interval_title">Bakgrunnssynkronisering</string>
-    <!-- Preference: Synchronization Interval Description (when disabled) -->
-    <string name="sync_SPr_interval_desc_disabled">Bakgrunnssynkronisering er deaktivert</string>    
-    <!-- Preference: Synchronization Interval Description (%s => setting) -->
-    <string name="sync_SPr_interval_desc">Foreløpig satt til %s</string>
-    
-    <!-- Preference: Background Wifi Title -->  
-    <string name="sync_SPr_bgwifi_title">Bare Wifi Innstilling</string>    
-    <!-- Preference: Background Wifi Description (enabled) -->
-    <string name="sync_SPr_bgwifi_desc_enabled">Synkronisering i bakgrunnen skal kun utføres med WiFi-tilkobling</string>    
-    <!-- Preference: Background Wifi Description (disabled) -->
-    <string name="sync_SPr_bgwifi_desc_disabled">Synkronisering i bakgrunnen skal alltid utføres</string>
-    
-    <!-- Actions Group Label  -->
-    <string name="sync_SPr_group_actions">Handlinger</string>
-
-    <!-- Synchronize Now Button -->    
-    <string name="sync_SPr_sync">Synkroniser nå!</string>
-    <!-- Synchronize Now Button if not logged in-->    
-    <string name="sync_SPr_sync_log_in">Logg Inn &amp; Synkroniser!</string>
-    
-    <!-- Sync: Clear Data Title -->
-    <string name="sync_SPr_forget">Logg av</string>
-    <!-- Sync: Clear Data Description -->
-    <string name="sync_SPr_forget_description">Slett alle synkroniseringsdata</string>
-
-    <!-- confirmation dialog for sync log out -->
-    <string name="sync_forget_confirm">Logge ut / slette synkroniserings data?</string>
-    
-    <string-array name="sync_SPr_interval_entries">
-        <!-- rmilk_MPr_interval_entries: Synchronization Intervals -->
-        <item>deaktiver</item>
-        <item>hvert kvarter</item>
-        <item>hver halvtime</item>
-        <item>hver time</item>
-        <item>hver tredje time</item>
-        <item>hver sjette time</item>
-        <item>hver tolvte time</item>
-        <item>daglig</item>
-        <item>hver tredje dag</item>
-        <item>hver uke</item>
-    </string-array>
-
     <!-- ======================= MilkLoginActivity ========================= -->
 
     <!-- RTM Login Instructions -->
     <string name="rmilk_MLA_label">Vennligst logg inn og autoriser Astrid</string>
 
-    <!-- Done Button -->
-    <string name="DLG_done">Utført</string>
-    
     <!-- Login Error Dialog (%s => message) -->
     <string name="rmilk_MLA_error">Beklager, kunne ikke verifisere innloggingen. Vennligst prøv igjen. \n\n Feilmelding: %s</string>
     
