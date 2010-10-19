@@ -138,8 +138,8 @@ public class MilkSyncProvider extends SyncProvider<MilkTaskContainer> {
     @SuppressWarnings("nls")
     private void initializeService(String authToken) throws ServiceInternalException {
         String appName = null;
-        String z = stripslashes(0,"q9883o3384n21snq17501qn38oo1r689", "b");
-        String v = stripslashes(16,"19o2n020345219os","a");
+        String z = stripslashes(0,"", "b");
+        String v = stripslashes(16,"","a");
 
         if(authToken == null)
             rtmService = new ServiceImpl(new ApplicationInfo(
